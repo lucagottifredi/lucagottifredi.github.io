@@ -19,13 +19,43 @@
 
   </style>
 </head>
-<body>
-  <h1 style="margin-top: 5%">Impasse</h1>
+
+<body style="cursor: none;">
+  <div id="custom-cursor"></div>
+  <h1 style="margin-top: 5%; font-style: italic;">Impasse</h1>
   <br>
-  <p>Questo è un bellissimo progetto</p>
+  <p style="font-family: Arial Narrow;">Questo è un bellissimo progetto</p>
   <br><br><br>
-  <a href="index.html">Torna alla home</a>
+  <a href="index.html" style="color: #46fa32;">{&nbsp;HOME&nbsp;}</a>
   <br><br>
   <img src="immagini/impasse/1.png" style="max-width: 275px; max-height: 275px;">
 </body>
+
+<script>
+
+  // Seleziona l'elemento del cursore personalizzato
+  const customCursor = document.getElementById('custom-cursor');
+
+  // Posiziona inizialmente il cursore fuori dalla vista
+  customCursor.style.left = '-50px';
+  customCursor.style.top = '-50px';
+  
+  // Aggiorna la posizione del cursore in base ai movimenti del mouse
+  document.addEventListener('mousemove', (event) => {
+    customCursor.style.left = `${event.pageX}px`;
+    customCursor.style.top = `${event.pageY}px`;
+  });
+
+  // Aggiungi la classe per il cursore sopra un link
+  document.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('mouseenter', () => {
+      customCursor.classList.add('link-hover');
+    });
+    link.addEventListener('mouseleave', () => {
+      customCursor.classList.remove('link-hover');
+    });
+  });
+  
+</script>
+
 </html>
