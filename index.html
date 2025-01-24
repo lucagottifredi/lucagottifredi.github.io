@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <link rel="icon" href="immagini/favicon.png">
+  <link rel="icon" href="multimedia/favicon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Luca Gottifredi</title>
@@ -10,10 +10,15 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Font: IBM Plex Sans -->
-      <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+
   <!-- Font: Instrument Serif -->
       <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+  <!-- Font: Instrument Sans -->
+      <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+
+  <!-- Font: Geist Mono -->
+      <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet">
 
   <style>
 
@@ -21,13 +26,23 @@
 </head>
 
 <body style="cursor: none;">
+
+  <div class="page-loader"></div>
+
   <div id="custom-cursor"></div>
-  <h1 style="margin-top: 5%; font-style: italic;">Luca Gottifredi</h1>
-  <br>
-  <p style="font-family: Arial Narrow;">Ciao, mi chiamo Luca e questo è il mio portfolio</p>
-  <br><br><br>
-  <a href="impasse.html" style="color: #46fa32;">{&nbsp;IMPASSE&nbsp;}</a>
+
+  <p style="margin-top: 2.5%; font-family: Geist Mono; font-size: 16px;">HOME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ABOUT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONTATTI</p>
   <br><br>
+  <div class="title-container">
+    <h1 class="title" style="font-style: italic;">Luca Gottifredi</h1>
+  </div>
+  <br><br>
+  <p style="font-family: Instrument Sans; font-size: 20px; line-height: 135%;">Designer della comunicazione interessato<br>al mondo delle identità visive e della comunicazione<br>per le istituzioni culturali e museali.</p>
+  <br><br><br>
+  <a class="custom-link" href="impasse.html">{&nbsp;IMPASSE&nbsp;}</a>
+  <br><br><br>
+  <img src="multimedia/stellina1.png" style="max-width: 100px; max-height: 100px;" class="rotate">
+
 </body>
 
 <script>
@@ -54,7 +69,39 @@
       customCursor.classList.remove('link-hover');
     });
   });
-  
+
+  // Ingrandimento al clic su un link
+  const links = document.querySelectorAll('.custom-link');
+  links.forEach((link) => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault(); // Evita il comportamento predefinito
+      customCursor.classList.add('expand');
+
+      // Aggiungi un timeout per il reindirizzamento
+      setTimeout(() => {
+        window.location.href = link.href; // Vai al link
+      }, 750); // Tempo per completare l'animazione
+    });
+  });
+
+  // Cerchio al refresh
+  document.addEventListener("DOMContentLoaded", () => {
+  const loader = document.querySelector(".page-loader");
+
+  // Verifica il tipo di navigazione (utente ha cliccato link o ha usato avanti/indietro?)
+  const navigationType = performance.getEntriesByType("navigation")[0]?.type || performance.navigation.type;
+
+  if (navigationType === "navigate" || navigationType === 0) {
+    // L'utente è arrivato cliccando un link
+    setTimeout(() => {
+      loader.classList.add("shrink");
+    }, 1000); // Ritardo prima di iniziare
+  } else {
+    // Nascondi immediatamente il loader se la pagina è stata caricata tramite avanti/indietro
+    loader.style.display = "none";
+  }
+});
+
 </script>
 
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <link rel="icon" href="immagini/favicon.png">
+  <link rel="icon" href="multimedia/favicon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Impasse</title>
@@ -10,25 +10,84 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Font: IBM Plex Sans -->
-      <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+
   <!-- Font: Instrument Serif -->
       <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+  <!-- Font: Instrument Sans -->
+      <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+
+  <!-- Font: Geist Mono -->
+      <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet">
 
   <style>
 
   </style>
 </head>
 
-<body style="cursor: none;">
+<body style="cursor: none; overflow: auto;">
+
+  <div class="page-loader"></div>
+
   <div id="custom-cursor"></div>
-  <h1 style="margin-top: 5%; font-style: italic;">Impasse</h1>
-  <br>
-  <p style="font-family: Arial Narrow;">Questo è un bellissimo progetto</p>
-  <br><br><br>
-  <a href="index.html" style="color: #46fa32;">{&nbsp;HOME&nbsp;}</a>
+
+  <p style="margin-top: 2.5%; font-family: Geist Mono; font-size: 16px;">HOME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ABOUT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONTATTI</p>
   <br><br>
-  <img src="immagini/impasse/1.png" style="max-width: 275px; max-height: 275px;">
+  <h1 style="font-style: italic;">Impasse</h1>
+  <br><br>
+  <p style="font-family: Instrument Sans; font-size: 20px; line-height: 135%;">Questo è un bellissimo progetto realizzato<br>per il Laboratorio di Sintesi Finale.</p>
+  <br><br><br>
+  <a class="custom-link" href="index.html">{&nbsp;HOME&nbsp;}</a>
+  <br><br>
+
+  <!-- Video (vimeo) -->
+  <div style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: transparent;">
+    <div style="position: relative; width: 70%; padding-top: 39.375%;">
+      <iframe 
+        src="https://player.vimeo.com/video/1049485957?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0" 
+        frameborder="0" 
+        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" 
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+        title="Impasse. Un viaggio immersivo lungo il Passo della Morte al confine italo-francese">
+      </iframe>
+    </div>
+  </div>
+  <script src="https://player.vimeo.com/api/player.js"></script>
+  
+  <!-- Video (normale) -->
+  <div class="video-container">
+    <video id="video" height="240" loop>
+      <source src="multimedia/impasse/video.mp4" type="video/mp4">
+    </video>
+    <button id="playPause" class="overlay-button">Play</button>
+  </div>
+  
+  <!-- SCRIPT - Video (normale) -->
+  <script>
+    const video = document.getElementById('video');
+    const playPauseButton = document.getElementById('playPause');
+
+    playPauseButton.addEventListener('click', () => {
+      if (video.paused) {
+        video.play();
+        playPauseButton.classList.add('hidden'); // Nasconde il bottone
+      }
+    });
+
+    video.addEventListener('click', () => {
+      if (!video.paused) {
+        video.pause();
+        playPauseButton.classList.remove('hidden'); // Mostra il bottone
+      }
+      else {
+        video.play();
+        playPauseButton.classList.add('hidden'); // Nasconde il bottone
+      }
+    });
+  </script>
+
+  <img src="multimedia/impasse/1.png" style="max-width: 275px; max-height: 275px;">
+
 </body>
 
 <script>
@@ -55,6 +114,38 @@
       customCursor.classList.remove('link-hover');
     });
   });
+
+  // Ingrandimento al clic su un link
+  const links = document.querySelectorAll('.custom-link');
+  links.forEach((link) => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault(); // Evita il comportamento predefinito
+      customCursor.classList.add('expand');
+
+      // Aggiungi un timeout per il reindirizzamento
+      setTimeout(() => {
+        window.location.href = link.href; // Vai al link
+      }, 750); // Tempo per completare l'animazione
+    });
+  });
+
+  // Cerchio al refresh
+  document.addEventListener("DOMContentLoaded", () => {
+  const loader = document.querySelector(".page-loader");
+
+  // Verifica il tipo di navigazione (utente ha cliccato link o ha usato avanti/indietro?)
+  const navigationType = performance.getEntriesByType("navigation")[0]?.type || performance.navigation.type;
+
+  if (navigationType === "navigate" || navigationType === 0) {
+    // L'utente è arrivato cliccando un link
+    setTimeout(() => {
+      loader.classList.add("shrink");
+    }, 1000); // Ritardo prima di iniziare
+  } else {
+    // Nascondi immediatamente il loader se la pagina è stata caricata tramite avanti/indietro
+    loader.style.display = "none";
+  }
+});
   
 </script>
 
